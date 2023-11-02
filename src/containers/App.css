@@ -4,3 +4,31 @@
   padding: 2rem;
   text-align: center;
 }
+
+.cellContainer {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 320px;
+  margin-bottom: 20px;
+}
+
+.cell {
+  width: 50px;
+  height: 50px;
+  border: 1px solid black;
+}
+
+.notClick {
+  background: #747bff;
+}
+
+.click {
+  background: grey;
+  cursor: not-allowed;
+}
+
+.hasItem {
+  background-image: url("public/vite.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+}
