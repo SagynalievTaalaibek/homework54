@@ -1,47 +1,31 @@
-import './App.css';
 import {useState} from 'react';
 import Cells from "../components/Cells/Cells";
-
-interface Cell {
-    id: number;
-    hasItem: boolean;
-    clicked: boolean;
-}
+import createItems from "../components/Cells/CellsFunction";
+import './App.css';
 
 
 const App = () => {
-
     const [count, setCount] = useState([
         {id: 0, count: 0}
     ]);
-    const createItems = () => {
-        const cells: Cell[] = [];
 
-        const randomIndex = Math.floor(Math.random() * 36);
-
-
-        for (let i = 0; i < 36; i++) {
-            const id = i + 1;
-            cells.push({hasItem: false, clicked: false, id: id});
-        }
-
-        cells[randomIndex].hasItem = true;
-
-        return cells;
-    };
+    const [isBomb, setBomb] = useState(false);
+    const [items, setItems] = useState(createItems);
 
     const changeBackground = (id: number) => {
         countCell(id);
 
         setItems((prevState) => prevState.map((cell) => {
             if (cell.id === id) {
+                if (cell.hasItem) {
+                    setBomb(true);
+                }
                 return {...cell, clicked: true};
             }
 
             return cell;
         }));
     };
-
     const countCell = (id: number) => {
         setCount((prevState) => prevState.map((cellCount) => {
             if (cellCount.id !== id) {
@@ -52,19 +36,23 @@ const App = () => {
         }));
     };
 
-    const [items, setItems] = useState(createItems);
-
-    console.log('Cells', items);
 
     const reset = () => {
-        setItems((prevState) => prevState.map((cell) => {
-            return{...cell, clicked: false};
-        }));
+        setItems(createItems);
 
         setCount((prevState) => prevState.map((cellCount) => {
             return {...cellCount, id: 0, count: 0};
         }));
+
+        setBomb(false);
     };
+
+    const boardContainer = ['cellContainer'];
+
+    if (isBomb) {
+        boardContainer.push('disabled');
+        alert('You find bomb! To continue game press reset');
+    }
 
 
     const cellsList = items.map((cell) => {
@@ -80,7 +68,7 @@ const App = () => {
 
     return (
         <div>
-            <div className="cellContainer">
+            <div className={boardContainer.join(' ')}>
                 {cellsList}
             </div>
             Tries {count[0].count}

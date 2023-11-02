@@ -23,12 +23,16 @@
 }
 
 .click {
-  background: grey;
-  cursor: not-allowed;
+  background: #fffefe;
+  pointer-events: none;
 }
 
 .hasItem {
   background-image: url("public/vite.svg");
   background-repeat: no-repeat;
   background-position: center;
+}
+
+.disabled {
+  pointer-events: none;
 }
