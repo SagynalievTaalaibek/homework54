@@ -26,6 +26,7 @@ const App = () => {
             return cell;
         }));
     };
+
     const countCell = (id: number) => {
         setCount((prevState) => prevState.map((cellCount) => {
             if (cellCount.id !== id) {
